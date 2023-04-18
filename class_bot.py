@@ -48,9 +48,6 @@ class Record:
         self.birthday = birthday
         if phone:
             self.phones.append(phone)
-
-    # def __copy__(self):
-    #     return Record(self.name, self.phones, self.birthday)
     
     def add(self, phone: Phone):
         self.phones.append(phone)
@@ -101,7 +98,6 @@ class AddressBook(UserDict):
     
     def save_record_to_file(self,file_name):
         with open(file_name,'wb') as f:
-            # f.write(str(self.data))
             pickle.dump(self.data,f)
     
     @staticmethod
@@ -112,38 +108,9 @@ class AddressBook(UserDict):
         
     def search_record(self,specifications:str):
         records_with_specs = []
-        # for record in self.data.items():
-        #     if specifications in record.name._value or specifications in record.phones._value:
-        #         records_with_specs.append(record)
-        #     else:
-        #         raise ValueError('There are no contacts with such specs.')
-        # for name,record in  self.data.items():
-        #     if specifications.lower() in name.lower() or specifications in record['phone']:
-        #         records_with_specs.append((name, record))
         for rec in self.data.values():
             if specifications in rec.name._value or specifications in rec.phones:
                 records_with_specs.append(rec)
         return records_with_specs
 
 
-if __name__ == '__main__':
-    address_book = AddressBook()
-
-    name1 = Name('John')
-    phone1 = Phone('+380980174612')
-    rec1 = Record(name1,phone1)
-    
-    name2 = Name('Bodya')
-    phone2 = Phone('+380980174613')
-    rec2 = Record(name2,phone2)
-
-    address_book.add_record(rec1)
-    address_book.add_record(rec2)
-    # print(type(address_book))
-    # print(address_book[0])
-
-    address_book.save_record_to_file('address_book.bin')
-    bus2 = AddressBook.load_record_from_file('address_book.bin')
-    print(bus2)
-    find = address_book.search_record('13')
-    print(find)
